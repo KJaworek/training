@@ -17,7 +17,7 @@
 	<properties>
 		<java.version>8</java.version>
 		<keycloak-plugin.version>1.5.0</keycloak-plugin.version>
-		<camunda.version>7.14.0</camunda.version>
+		<camunda.version>7.14.0-ee</camunda.version>
 		<camundaRest.version>7.14.0</camundaRest.version>
 		<lombok.version>1.18.10</lombok.version>
 	</properties>
@@ -50,7 +50,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.camunda.bpm.springboot</groupId>
-			<artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+			<artifactId>camunda-bpm-spring-boot-starter-webapp-ee</artifactId>
 			<version>${camunda.version}</version>
 		</dependency>
 		<dependency>
@@ -109,6 +109,16 @@
 			<version>0.2.3</version>
 		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>camunda-bpm-nexus-ee</id>
+			<name>camunda-bpm-nexus</name>
+			<url>
+				https://app.camunda.com/nexus/content/repositories/camunda-bpm-ee
+			</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
