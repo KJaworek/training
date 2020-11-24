@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0skeugq" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <bpmn:collaboration id="Collaboration_02hnl9j">
+    <bpmn:participant id="Participant_0mwo4c1" name="proces zgłoszenia kandydata" processRef="WYSLANIE_ZGLOSZENIA" />
+  </bpmn:collaboration>
+  <bpmn:process id="WYSLANIE_ZGLOSZENIA" name="proces zgłoszenia kandydata" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:extensionElements>
+        <camunda:formData businessKey="job_id">
+          <camunda:formField id="jobId" label="numer oferty:" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="name" label="Imie i Nazwiskio" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1s5ano2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1s5ano2" sourceRef="StartEvent_1" targetRef="Event_0zhapou" />
+    <bpmn:intermediateThrowEvent id="Event_0zhapou" name="wysłanie CV">
+      <bpmn:incoming>Flow_1s5ano2</bpmn:incoming>
+      <bpmn:outgoing>Flow_188m0rb</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xh59qc" messageRef="Message_16z5tiw" camunda:delegateExpression="${sendApplicationDelegate}" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="Event_1hr2eha">
+      <bpmn:incoming>Flow_188m0rb</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_188m0rb" sourceRef="Event_0zhapou" targetRef="Event_1hr2eha" />
+  </bpmn:process>
+  <bpmn:message id="Message_16z5tiw" name="APPLICATION" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_02hnl9j">
+      <bpmndi:BPMNShape id="Participant_00o48op_di" bpmnElement="Participant_0mwo4c1" isHorizontal="true">
+        <dc:Bounds x="129" y="60" width="431" height="220" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_188m0rb_di" bpmnElement="Flow_188m0rb">
+        <di:waypoint x="348" y="177" />
+        <di:waypoint x="422" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s5ano2_di" bpmnElement="Flow_1s5ano2">
+        <di:waypoint x="228" y="177" />
+        <di:waypoint x="312" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="192" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kzoetj_di" bpmnElement="Event_0zhapou">
+        <dc:Bounds x="312" y="159" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="300" y="202" width="61" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1hr2eha_di" bpmnElement="Event_1hr2eha">
+        <dc:Bounds x="422" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

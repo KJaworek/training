@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1fzzwcy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <bpmn:collaboration id="Collaboration_0ay10xa">
+    <bpmn:participant id="Participant_0mwo4cv" name="Proces uzupełniania wakatu" processRef="PROCESS_UZUPELNIANIA_WAKATU" />
+  </bpmn:collaboration>
+  <bpmn:process id="PROCESS_UZUPELNIANIA_WAKATU" name="Proces uzupełniania wakatu" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Zapotrzebowanie na nowego pracownika">
+      <bpmn:extensionElements>
+        <camunda:formData businessKey="jobId">
+          <camunda:formField id="jobId" label="numer zgłoszenia" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1bstzkm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1bstzkm" sourceRef="StartEvent_1" targetRef="Event_0z0zm0l" />
+    <bpmn:sequenceFlow id="Flow_0px5hgh" sourceRef="Event_0z0zm0l" targetRef="Event_131sws7" />
+    <bpmn:intermediateThrowEvent id="Event_0z0zm0l" name="Zgłsozenie zapotrzebowania" camunda:asyncBefore="true">
+      <bpmn:incoming>Flow_1bstzkm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0px5hgh</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0fn2196" messageRef="Message_1y66fqe" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().startProcessInstanceByMessage(&#34;START_PROCESS&#34;, execution.businessKey)}" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateCatchEvent id="Event_131sws7" name="Zrealizowano zapotrzebowanie">
+      <bpmn:incoming>Flow_0px5hgh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kydf41</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0ty0mn8" messageRef="Message_16rlobu" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_0h210f1" name="Obsadzenie wakatu">
+      <bpmn:incoming>Flow_0kydf41</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0kydf41" sourceRef="Event_131sws7" targetRef="Event_0h210f1" />
+  </bpmn:process>
+  <bpmn:message id="Message_1y66fqe" name="MESSAGE_TEST" />
+  <bpmn:message id="Message_16rlobu" name="ZREALIZOWANO_ZAPOTRZEBOWANIE" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0ay10xa">
+      <bpmndi:BPMNShape id="Participant_0mwo4cv_di" bpmnElement="Participant_0mwo4cv" isHorizontal="true">
+        <dc:Bounds x="129" y="80" width="491" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0kydf41_di" bpmnElement="Flow_0kydf41">
+        <di:waypoint x="448" y="200" />
+        <di:waypoint x="512" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0px5hgh_di" bpmnElement="Flow_0px5hgh">
+        <di:waypoint x="318" y="200" />
+        <di:waypoint x="412" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bstzkm_di" bpmnElement="Flow_1bstzkm">
+        <di:waypoint x="228" y="200" />
+        <di:waypoint x="282" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="192" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="168" y="225" width="85" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0i3jbmv_di" bpmnElement="Event_0z0zm0l">
+        <dc:Bounds x="282" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="258" y="225" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0kabu8j_di" bpmnElement="Event_131sws7">
+        <dc:Bounds x="412" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="388" y="225" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0h210f1_di" bpmnElement="Event_0h210f1">
+        <dc:Bounds x="512" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="501" y="225" width="59" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
