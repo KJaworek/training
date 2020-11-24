@@ -1,0 +1,21 @@
+spring.datasource:
+  url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password: sa
+spring.h2.console.enabled: true
+camunda.bpm:
+  history-level: full
+  authorization:
+    enabled: true
+  filter:
+    create: All tasks
+  webapp.application-path:
+
+server:
+  port: 8080
+logging:
+  level:
+#    org.camunda.bpm.engine.persistence: DEBUG
+#    org.camunda.bpm.engine.cmd: DEBUG
+#    org.camunda.bpm.engine.jobexecutor: DEBUG
+    ROOT: info
