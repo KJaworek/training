@@ -21,7 +21,7 @@
     <bpmn:intermediateThrowEvent id="Event_0z0zm0l" name="Zgłsozenie zapotrzebowania" camunda:asyncBefore="true">
       <bpmn:incoming>Flow_1bstzkm</bpmn:incoming>
       <bpmn:outgoing>Flow_0px5hgh</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0fn2196" messageRef="Message_1y66fqe" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().startProcessInstanceByMessage(&#34;START_PROCESS&#34;, execution.businessKey)}" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0fn2196" messageRef="Message_1y66fqe" camunda:delegateExpression="${startHrProcessMessageCorrelationDelegate}" />
     </bpmn:intermediateThrowEvent>
     <bpmn:intermediateCatchEvent id="Event_131sws7" name="Zrealizowano zapotrzebowanie">
       <bpmn:incoming>Flow_0px5hgh</bpmn:incoming>
@@ -33,7 +33,7 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0kydf41" sourceRef="Event_131sws7" targetRef="Event_0h210f1" />
   </bpmn:process>
-  <bpmn:message id="Message_1y66fqe" name="MESSAGE_TEST" />
+  <bpmn:message id="Message_1y66fqe" name="START_PROCESS" />
   <bpmn:message id="Message_16rlobu" name="ZREALIZOWANO_ZAPOTRZEBOWANIE" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0ay10xa">
